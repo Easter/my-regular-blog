@@ -83,6 +83,8 @@ DATABASES = {
         'PASSWORD': 'p@$$word', # 链接数据库的密码
         'HOST': 'localhost', # mysql服务器的域名和ip地址
         'PORT': '3306', # mysql的一个端口号,默认是3306
+        'CHARSET':'utf8',
+        'COLLATION':'utf8_general_ci'
     }
 }
 

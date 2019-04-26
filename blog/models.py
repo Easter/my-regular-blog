@@ -40,7 +40,7 @@ class Post(models.Model):
         return reverse('blog:detail',kwargs={'pk':self.pk})
 
     def save(self,*args,**kwargs):
-        if self.excerpt:
+        if not self.excerpt:
             md = markdown.Markdown(extensions=[
                 'markdown.extensions.extra',
                 'markdown.extensions.codehilite',

@@ -24,6 +24,10 @@ def get_blog_numbers():
     #     return post_list
     return Post.objects.all()
 
+@register.simple_tag
+def get_tags():
+    return Tag.objects.annotate(num_posts=Count('post')).filter(num_posts__gt=0)
+
 
 
 

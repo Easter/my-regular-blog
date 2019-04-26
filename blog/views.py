@@ -1,6 +1,6 @@
 #coding=utf-8
 from django.shortcuts import render,get_object_or_404
-from .models import Post,Category
+from .models import Post,Category,Tag
 import markdown
 from comments.forms import CommentForm
 from django.views.generic import ListView,DeleteView
@@ -201,4 +201,12 @@ class CategoryView(ListView):
 #     cate = get_object_or_404(Category,pk=pk)
 #     post_list = Post.objects.filter(category=cate).order_by('-created_time')
 #     return render(request,"blog/index.html",{"post_list":post_list})
+class TagView(ListView):
+    model = Post
+    template_name = 'blog/index.html'
+    context_object_name = 'post_list'
+    def get_queryset(self):
+        tag = get_object_or_404(Tag,pk=self.kwargs.get('pk'))
+        return super(TagView,self).get_queryset().filter(tag=tag)
+
 

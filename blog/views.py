@@ -4,6 +4,9 @@ from .models import Post,Category,Tag
 import markdown
 from comments.forms import CommentForm
 from django.views.generic import ListView,DeleteView
+from django.utils.text import slugify
+from markdown.extensions.toc import TocExtension
+from django.db.models import Q
 # Create your views here.
 # 使用通用视图
 class IndexView(ListView):
@@ -169,12 +172,13 @@ class IndexView(ListView):
 def detail(request,pk):
     post = get_object_or_404(Post,pk=pk)
     post.increase_views()
-    post.body = markdown.markdown(post.body,
-                                  extensions=[
+    md = markdown.Markdown(extensions=[
                                      'markdown.extensions.extra',
                                      'markdown.extensions.codehilite',
-                                     'markdown.extensions.toc',
-                                  ])
+                                     TocExtension(slugify=slugify)
+                                    ])
+    post.body = md.convert(post.body)
+    post.toc = md.toc
     comment_list = post.comment_set.all()
     content = {"post":post,"form":CommentForm(),"comment_list":comment_list}
     return render(request,'blog/detail.html',content)
@@ -207,6 +211,17 @@ class TagView(ListView):
     context_object_name = 'post_list'
     def get_queryset(self):
         tag = get_object_or_404(Tag,pk=self.kwargs.get('pk'))
-        return super(TagView,self).get_queryset().filter(tag=tag)
+        # return super(TagView,self).get_queryset().filter(tag=tag)
+        return Post.objects.filter(tag=tag)
 
+def search(request):
+    q = request.GET.get("q")
+    error_msg = ""
+
+    if not q:
+        error_msg = "请输入关键词"
+        return render(request,'blog/index.html',{"error_msg":error_msg})
+    post_list = Post.objects.filter(Q(title__icontains=q)|Q(body__icontains=q))
+    # Q提供了更复杂的搜索方式不用Q的话就只能写成逗号分隔的格式，表达意思为且
+    return render(request,"blog/index.html",{"error_msg":error_msg,"post_list":post_list})
 

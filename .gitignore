@@ -1,5 +1,7 @@
 .idea/
 db.sqlite3
-*.pyc
-__pycache__
-.DS_Store
+/blog/migrations
+!/blog/migrations/__init__.py
+/comments/migrations
+!/comments/migrations/__init__.py
+

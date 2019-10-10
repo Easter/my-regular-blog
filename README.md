@@ -3,4 +3,4 @@
 可以对文章进行搜索，  
 使用者可以发表评论，但是需要提供个人信息  
 每个文章有观看数量和评论数量
-![文章目录](D:\1.jpg "文章目录样式")
+![](https://github.com/Easter/my-regular-blog/tree/master/img-folder/1.jpg "文章目录样式")

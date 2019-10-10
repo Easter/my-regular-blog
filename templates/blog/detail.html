@@ -44,6 +44,17 @@
                   {{ form.text.errors }}
                   <button type="submit" class="comment-btn">发表</button>
                 </div>
+{#                {{ form.as_table }}#}
+{#                {% for field in form %}#}
+{#                    <div class="fieldWrapper">#}
+{#                        {{ field.errors }}#}
+{#                        {{ field.label_tag }} {{ field }}#}
+{#                        {% if field.help_text %}#}
+{#                        <p class="help">{{ field.help_text|safe }}</p>#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#                <button type="submit">提交</button>#}
             </div>
         </form>
         <div class="comment-list-panel">

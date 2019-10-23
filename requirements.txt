@@ -1,4 +1,4 @@
-Django==2.1
+Django==2.1.11
 django-haystack==2.8.1
 jieba==0.39
 Markdown==3.1
